@@ -93,7 +93,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 			if (Control == null)
 				return;
-			Control.BackgroundColor = color == Color.Default ? NSColor.Clear : color.ToNSColor();
+			Control.BackgroundColor = color == Color.Default ? ColorExtensions.ControlBackgroundColor : color.ToNSColor();
 
 			UpdateCancelButton();
 		}
@@ -160,7 +160,7 @@ namespace Xamarin.Forms.Platform.MacOS
 		{
 			var formatted = (FormattedString)Element.Placeholder ?? string.Empty;
 			var targetColor = Element.PlaceholderColor;
-			var color = Element.IsEnabled && !targetColor.IsDefault ? targetColor : ColorExtensions.SeventyPercentGrey.ToColor();
+			var color = Element.IsEnabled && !targetColor.IsDefault ? targetColor : ColorExtensions.PlaceholderColor.ToColor(NSColorSpace.DeviceRGBColorSpace);
 			Control.PlaceholderAttributedString = formatted.ToAttributed(Element, color);
 		}
 
@@ -172,7 +172,7 @@ namespace Xamarin.Forms.Platform.MacOS
 
 		void UpdateTextColor()
 		{
-			_defaultTextColor = _defaultTextColor ?? Control.TextColor;
+			_defaultTextColor = _defaultTextColor ?? ColorExtensions.TextColor;
 			var targetColor = Element.TextColor;
 
 			Control.TextColor = targetColor.ToNSColor(_defaultTextColor);
